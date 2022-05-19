@@ -1,9 +1,7 @@
-import { ReactNode } from "react";
 import {
   Box,
   Flex,
   Avatar,
-  Link,
   Image,
   Button,
   Menu,
@@ -11,7 +9,6 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
   useColorMode,

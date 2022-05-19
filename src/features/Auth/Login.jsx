@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Flex,
   Box,
@@ -12,9 +13,46 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { loginUser } from "./authSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Link as ReactRouterLink } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function Login() {
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const [userDetails, setUserDetails] = useState({
+    email: "",
+    password: "",
+    isRememberMe: true,
+  });
+
+  const changeHandler = (e) => {
+    setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
+  };
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    if (userDetails.email === "" || userDetails.password === "") {
+      toast.error("Please enter both email and password");
+    } else {
+      dispatch(loginUser(userDetails));
+    }
+  };
+
+  const guestLoginHandler = (e) => {
+    e.preventDefault();
+    setUserDetails({
+      ...userDetails,
+      email: "johndoe@gmail.com",
+      password: "johnDoe123",
+    });
+    dispatch(loginUser({ email: "johndoe@gmail.com", password: "johnDoe123" }));
+    navigate("/home");
+  };
   return (
     <Flex
       minH={"calc(100vh - 80px)"}
@@ -42,11 +80,23 @@ export function Login() {
           <Stack spacing={4}>
             <FormControl id='email' isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type='email' placeholder='johndoe@gmail.com' />
+              <Input
+                type='email'
+                placeholder='johndoe@gmail.com'
+                onChange={changeHandler}
+                value={userDetails.email}
+                name='email'
+              />
             </FormControl>
             <FormControl id='password' isRequired>
               <FormLabel>Password</FormLabel>
-              <Input type='password' placeholder='*********' />
+              <Input
+                type='password'
+                placeholder='*********'
+                onChange={changeHandler}
+                value={userDetails.password}
+                name='password'
+              />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -54,10 +104,22 @@ export function Login() {
                 align={"start"}
                 justify={"space-between"}
               >
-                <Checkbox isChecked>Remember me</Checkbox>
+                <Checkbox
+                  onChange={() =>
+                    setUserDetails({
+                      ...userDetails,
+                      isRememberMe: !userDetails.isRememberMe,
+                    })
+                  }
+                  value={userDetails.isRememberMe}
+                  isChecked={userDetails.isRememberMe}
+                >
+                  Remember me
+                </Checkbox>
                 <Link color={"blue.400"}>Forgot password?</Link>
               </Stack>
               <Button
+                onClick={loginHandler}
                 bg={"blue.400"}
                 color={"white"}
                 _hover={{
@@ -67,6 +129,7 @@ export function Login() {
                 Sign in
               </Button>
               <Button
+                onClick={guestLoginHandler}
                 bg={"gray.400"}
                 color={"white"}
                 _hover={{
