@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 const token = JSON.parse(localStorage?.getItem("SGtoken")) || null;
 const user = JSON.parse(localStorage?.getItem("SGuser") || null);
+
 const initialState = {
   userToken: token,
   user,
