@@ -1,6 +1,6 @@
 import "./App.css";
 import { Navbar, RequireAuth, RestrictAuth } from "components";
-import { Login, Signup } from "features";
+import { Login, Signup, Home } from "features";
 import { Routes, Route } from "react-router-dom";
 import Mockman from "mockman-js";
 import { ToastContainer } from "react-toastify";
@@ -26,14 +26,7 @@ function App() {
         </Route>
 
         <Route element={<RequireAuth />}>
-          <Route
-            path='/home'
-            element={
-              <>
-                <h1>This is homepage</h1>
-              </>
-            }
-          ></Route>
+          <Route path='/home' element={<Home />}></Route>
         </Route>
         <Route path='/mockman' element={<Mockman />}></Route>
       </Routes>

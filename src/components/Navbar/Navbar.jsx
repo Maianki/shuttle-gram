@@ -15,10 +15,18 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { siteLogo } from "assets";
+import { useDispatch } from "react-redux";
+import { logout } from "features/Auth/authSlice";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 export function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -67,7 +75,7 @@ export function Navbar() {
                   <MenuDivider />
                   <MenuItem>Profile</MenuItem>
                   <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </MenuList>
               </Menu>
             </Stack>
