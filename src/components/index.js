@@ -3,3 +3,4 @@ export { RestrictAuth } from "./RestrictAuth/RestrictAuth";
 export { RequireAuth } from "./RequireAuth/RequireAuth";
 export { SidebarLeft } from "./Sidebar/SidebarLeft";
 export { SidebarRight } from "./Sidebar/SidebarRight";
+export { Filters } from "./Filters/Filters";

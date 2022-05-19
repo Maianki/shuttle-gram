@@ -5,6 +5,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FaEllipsisV } from "react-icons/fa";
+import { BiAbacus } from "react-icons/bi";
 export {
   AiOutlineHome,
   AiOutlineRocket,
@@ -15,4 +16,5 @@ export {
   FaEllipsisV,
   BiLike,
   BiDislike,
+  BiAbacus,
 };
