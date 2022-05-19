@@ -37,15 +37,7 @@ export function Login() {
   const loginHandler = (e) => {
     e.preventDefault();
     if (userDetails.email === "" || userDetails.password === "") {
-      toast.error("Please enter both email and password", {
-        position: "top-right",
-        autoClose: 500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error("Please enter both email and password");
     } else {
       dispatch(loginUser(userDetails));
     }

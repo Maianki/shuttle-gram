@@ -49,25 +49,9 @@ export function Signup() {
       userDetails.email === "" ||
       userDetails.password === ""
     ) {
-      toast.error("Please enter all the fields", {
-        position: "top-right",
-        autoClose: 500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error("Please enter all the fields");
     } else if (userDetails.password !== userDetails.confirmPassword) {
-      toast.error("Password and confirm password doesn't match", {
-        position: "top-right",
-        autoClose: 500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error("Password and confirm password doesn't match");
     } else {
       dispatch(signupUser(userDetails));
     }

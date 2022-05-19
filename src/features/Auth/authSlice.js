@@ -17,36 +17,18 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await loginService(email, password);
-      console.log(response);
       if (response.status === 200) {
         localStorage?.setItem(
           "SGtoken",
           JSON.stringify(response.data.encodedToken)
         );
-        toast.success("You are logged in ", {
-          position: "top-right",
-          autoClose: 500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.success("You are logged in");
       }
-      console.log(response);
       return response.data;
     } catch (error) {
       const { response } = error;
       console.log(error.response);
-      toast.error(`${response.data.errors[0]}`, {
-        position: "top-right",
-        autoClose: 500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(`${response.data.errors[0]}`);
       return rejectWithValue(error.response.data);
     }
   }
@@ -64,15 +46,7 @@ export const signupUser = createAsyncThunk(
     } catch (error) {
       const { response } = error;
       console.log(error.response);
-      toast.error(`${response.data.errors[0]}`, {
-        position: "top-right",
-        autoClose: 500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(`${response.data.errors[0]}`);
 
       return rejectWithValue(error.response.data);
     }
@@ -93,12 +67,10 @@ const authSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, action) => {
       state.authStatus = "success";
-      console.log("success here");
       state.userToken = action.payload.encodedToken;
       state.user = action.payload.foundUser;
     },
     [loginUser.rejected]: (state, action) => {
-      console.log("here");
       state.authStatus = "rejected";
       state.authError = action.payload.errors;
     },

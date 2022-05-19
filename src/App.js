@@ -9,7 +9,15 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <div className='App'>
-      <ToastContainer />
+      <ToastContainer
+        position={"top-right"}
+        autoClose={1000}
+        hideProgressBar={false}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={true}
+        progress={undefined}
+      />
       <Navbar />
       <Routes>
         <Route element={<RestrictAuth />}>
