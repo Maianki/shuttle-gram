@@ -1,0 +1,10 @@
+export const SIGNUP_API = "/api/auth/signup";
+export const LOGIN_API = "/api/auth/login";
+export const USERS_API = "/api/users";
+export const POSTS_API = "/api/posts";
+export const COMMENTS_API = "/api/comments";
+export const LIKES_API = "/api/posts/like";
+export const DISLIKES_API = "/api/posts/dislike";
+export const BOOKMARKS_API = "/api/users/bookmark";
+export const FOLLOW_API = "/api/users/follow/";
+export const UNFOLLOW_API = "/api/users/unfollow";
