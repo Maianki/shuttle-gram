@@ -22,7 +22,6 @@ export function SidebarLeft() {
     <div>
       <Flex
         spacing={4}
-        align='stretch'
         maxW={"16rem"}
         fontSize={"xl"}
         height={"calc(100vh - 80px)"}
@@ -34,18 +33,19 @@ export function SidebarLeft() {
         <Box>
           <Flex alignItems={"center"} lineHeight={10}>
             <AiOutlineHome />
-            Home
+            <Box px={2}>Home</Box>
           </Flex>
           <Flex alignItems={"center"} lineHeight={10}>
-            <AiOutlineRocket /> Explore
+            <AiOutlineRocket />
+            <Box px={2}>Profile</Box>
           </Flex>
           <Flex alignItems={"center"} lineHeight={10}>
             <BiBookmarks />
-            Bookmarks
+            <Box px={2}>Bookmarks</Box>
           </Flex>
           <Flex alignItems={"center"} lineHeight={10}>
             <CgProfile />
-            Profile
+            <Box px={2}>Profile</Box>
           </Flex>
           <Button
             onClick={createHandler}
