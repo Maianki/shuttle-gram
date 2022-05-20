@@ -65,7 +65,11 @@ export function Login() {
           <Heading fontSize={"4xl"}>Sign in to shuttleGram</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
             New to shuttleGram?{" "}
-            <Link as={ReactRouterLink} to='/sign-up' color={"blue.400"}>
+            <Link
+              as={ReactRouterLink}
+              to='/sign-up'
+              color={useColorModeValue("primary", "secondary")}
+            >
               Sign up
             </Link>{" "}
             ✌️
@@ -116,14 +120,16 @@ export function Login() {
                 >
                   Remember me
                 </Checkbox>
-                <Link color={"blue.400"}>Forgot password?</Link>
+                <Link color={useColorModeValue("primary", "secondary")}>
+                  Forgot password?
+                </Link>
               </Stack>
               <Button
                 onClick={loginHandler}
-                bg={"blue.400"}
+                bg={"primary"}
                 color={"white"}
                 _hover={{
-                  bg: "blue.500",
+                  bg: useColorModeValue("gray.700", "gray.600"),
                 }}
               >
                 Sign in

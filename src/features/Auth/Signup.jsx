@@ -171,10 +171,10 @@ export function Signup() {
               <Button
                 loadingText='Submitting'
                 size='lg'
-                bg={"blue.400"}
+                bg={"primary"}
                 color={"white"}
                 _hover={{
-                  bg: "blue.500",
+                  bg: useColorModeValue("gray.700", "gray.600"),
                 }}
                 onClick={handleSignup}
               >
@@ -184,7 +184,11 @@ export function Signup() {
             <Stack pt={6}>
               <Text align={"center"}>
                 Already a user?{" "}
-                <Link as={ReactRouterLink} to='/' color={"blue.400"}>
+                <Link
+                  as={ReactRouterLink}
+                  to='/'
+                  color={useColorModeValue("primary", "secondary")}
+                >
                   Login
                 </Link>
               </Text>
