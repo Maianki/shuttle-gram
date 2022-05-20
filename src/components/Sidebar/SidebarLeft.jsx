@@ -22,6 +22,8 @@ export function SidebarLeft() {
     <div>
       <Flex
         spacing={4}
+        position='sticky'
+        top='20'
         maxW={"16rem"}
         fontSize={"xl"}
         height={"calc(100vh - 80px)"}

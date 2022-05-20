@@ -29,7 +29,15 @@ export function Navbar() {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box
+        bg={useColorModeValue("gray.100", "gray.900")}
+        px={4}
+        position='fixed'
+        top='0'
+        left='0'
+        right={0}
+        zIndex='1200'
+      >
         <Flex h={20} alignItems={"center"} justifyContent={"space-between"}>
           <Box>
             <Image

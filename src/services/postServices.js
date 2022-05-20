@@ -22,11 +22,12 @@ export const getSinglePostService = async (postId) => {
  */
 
 export const createPostService = async (token, postData) => {
-  const response = await axios.post(
-    POSTS_API,
-    { post: postData },
-    { headers: { authorization: token } }
-  );
+    console.log(token);
+    const response = await axios.post(
+      POSTS_API,
+      { postData },
+      { headers: { authorization: token } }
+    );
   return response;
 };
 

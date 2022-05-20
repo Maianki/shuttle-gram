@@ -8,15 +8,22 @@ import {
   Button,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { createUserPost } from "./postSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export function PostTextBox() {
   const [value, setValue] = useState("");
+  const { userToken } = useSelector((state) => state.auth);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     setValue(inputValue);
   };
-  const postHandler = () => {};
+
+  const dispatch = useDispatch();
+  const postHandler = async () => {
+    dispatch(createUserPost({ token: userToken, postData: value }));
+  };
 
   return (
     <Flex

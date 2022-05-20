@@ -1,12 +1,25 @@
 import { SidebarLeft, SidebarRight, Filters } from "components";
 import { PostTextBox, Post } from "features";
 import { Container, Flex, Heading, HStack } from "@chakra-ui/react";
-import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserAllPosts } from "features/Post/postSlice";
+import React, { useEffect } from "react";
 import "./home.css";
 
 export function Home() {
+  const posts = useSelector((state) => state.posts.allPosts);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserAllPosts());
+  }, [dispatch]);
+
   return (
-    <Container maxW={1280} justifyContent={"space-between"} display={"flex"}>
+    <Container
+      maxW={1280}
+      justifyContent={"space-between"}
+      display={"flex"}
+      mt={20}
+    >
       <SidebarLeft />
       <Flex grow={1} direction='column'>
         <PostTextBox />
@@ -16,8 +29,9 @@ export function Home() {
           </Heading>
           <Filters />
         </HStack>
-        <Post />
-        <Post />
+        {posts.map((post) => (
+          <Post key={post._id} post={post} />
+        ))}
       </Flex>
       <SidebarRight />
     </Container>
