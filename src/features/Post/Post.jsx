@@ -17,11 +17,13 @@ import {
 import {
   FaRegCommentAlt,
   BiBookmarks,
+  BsFillBookmarksFill,
   BiLike,
   BiDislike,
   FaEllipsisV,
 } from "assets";
 import { deleteUserPost } from "./postSlice";
+import { addToBookmarks, removeFromBookmarks } from "features/Users/usersSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { PostEditModal } from "./PostEditModal";
 import React from "react";
@@ -32,17 +34,20 @@ export function Post({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user: currentUser } = useSelector((state) => state.auth);
   const { userToken: token } = useSelector((state) => state.auth);
+  const { allBookmarks } = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
-  // const editPostHandler = async () => {
-  //   onOpen();
-  //   dispatch(editUserPost());
-  // };
+  const handleBookmarks = () => {
+    if (allBookmarks.find((post) => post._id === postId)) {
+      dispatch(removeFromBookmarks(token, postId));
+    } else {
+      dispatch(addToBookmarks(token, postId));
+    }
+  };
 
   const deletePostHandler = async () => {
     dispatch(deleteUserPost({ token, postId }));
   };
-  console.log(postId);
 
   return (
     <VStack shadow={"md"} py={2} px={4} my={4} alignItems={"stretch"}>
@@ -90,8 +95,12 @@ export function Post({
         <Button>
           <FaRegCommentAlt />
         </Button>
-        <Button>
-          <BiBookmarks />
+        <Button onClick={handleBookmarks}>
+          {allBookmarks.find((post) => post._id === postId) ? (
+            <BsFillBookmarksFill />
+          ) : (
+            <BiBookmarks />
+          )}
         </Button>
       </Flex>
     </VStack>

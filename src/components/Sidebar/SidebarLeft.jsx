@@ -15,6 +15,8 @@ import {
   BiBookmarks,
   CgProfile,
 } from "assets";
+import { NavLink } from "react-router-dom";
+import styles from "./sidebar.module.css";
 
 export function SidebarLeft() {
   const createHandler = () => {};
@@ -24,31 +26,72 @@ export function SidebarLeft() {
         spacing={4}
         position='sticky'
         top='20'
-        maxW={"16rem"}
+        maxW={"20rem"}
+        minW={"16rem"}
         fontSize={"xl"}
         height={"calc(100vh - 80px)"}
         flexDirection='column'
         justifyContent={"space-between"}
         py={6}
         px={2}
+        pr={6}
       >
         <Box>
-          <Flex alignItems={"center"} lineHeight={10}>
-            <AiOutlineHome />
-            <Box px={2}>Home</Box>
-          </Flex>
-          <Flex alignItems={"center"} lineHeight={10}>
-            <AiOutlineRocket />
-            <Box px={2}>Profile</Box>
-          </Flex>
-          <Flex alignItems={"center"} lineHeight={10}>
-            <BiBookmarks />
-            <Box px={2}>Bookmarks</Box>
-          </Flex>
-          <Flex alignItems={"center"} lineHeight={10}>
-            <CgProfile />
-            <Box px={2}>Profile</Box>
-          </Flex>
+          <NavLink
+            to='/home'
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.isNavLinkActive} ${styles.sidebarMenuNavLink}`
+                : `${styles.isNavLinkInactive} ${styles.sidebarMenuNavLink}`
+            }
+          >
+            <Flex alignItems={"center"} lineHeight={10}>
+              <AiOutlineHome />
+              <Box px={2}>Home</Box>
+            </Flex>
+          </NavLink>
+          <NavLink
+            to='/explore'
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.isNavLinkActive} ${styles.sidebarMenuNavLink}`
+                : `${styles.isNavLinkInactive} ${styles.sidebarMenuNavLink}`
+            }
+          >
+            <Flex alignItems={"center"} lineHeight={10}>
+              <AiOutlineRocket />
+              <Box px={2}>Profile</Box>
+            </Flex>
+          </NavLink>
+
+          <NavLink
+            to='/bookmarks'
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.isNavLinkActive} ${styles.sidebarMenuNavLink}`
+                : `${styles.isNavLinkInactive} ${styles.sidebarMenuNavLink}`
+            }
+          >
+            <Flex alignItems={"center"} lineHeight={10}>
+              <BiBookmarks />
+              <Box px={2}>Bookmarks</Box>
+            </Flex>
+          </NavLink>
+
+          <NavLink
+            to='/profile'
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.isNavLinkActive} ${styles.sidebarMenuNavLink}`
+                : `${styles.isNavLinkInactive} ${styles.sidebarMenuNavLink}`
+            }
+          >
+            <Flex alignItems={"center"} lineHeight={10}>
+              <CgProfile />
+              <Box px={2}>Profile</Box>
+            </Flex>
+          </NavLink>
+
           <Button
             onClick={createHandler}
             mt={10}

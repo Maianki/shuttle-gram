@@ -23,8 +23,6 @@ export function PostEditModal({ onClose, postData, isOpen, postId }) {
     setContent(e.target.value);
   };
 
-  console.log(postData);
-
   const editPostHandler = async () => {
     dispatch(editUserPost({ token: userToken, postId, postData: content }));
     setContent("");

@@ -1,12 +1,22 @@
 import "./App.css";
+import { useEffect } from "react";
 import { Navbar, RequireAuth, RestrictAuth } from "components";
-import { Login, Signup, Home } from "features";
+import { Login, Signup, Home, Bookmarks } from "features";
 import { Routes, Route } from "react-router-dom";
 import Mockman from "mockman-js";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllBookmarks } from "features/Users/usersSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+  const dispatch = useDispatch();
+  const { userToken: token } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(getAllBookmarks(token));
+  }, [dispatch, token]);
+
   return (
     <div className='App'>
       <ToastContainer
@@ -27,6 +37,7 @@ function App() {
 
         <Route element={<RequireAuth />}>
           <Route path='/home' element={<Home />}></Route>
+          <Route path='/bookmarks' element={<Bookmarks />}></Route>
         </Route>
         <Route path='/mockman' element={<Mockman />}></Route>
       </Routes>

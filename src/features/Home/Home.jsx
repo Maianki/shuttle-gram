@@ -4,7 +4,6 @@ import { Container, Flex, Heading, HStack } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserAllPosts } from "features/Post/postSlice";
 import React, { useEffect } from "react";
-import "./home.css";
 
 export function Home() {
   const posts = useSelector((state) => state.posts.allPosts);

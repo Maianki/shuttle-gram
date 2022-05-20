@@ -59,7 +59,7 @@ export const editUserPost = createAsyncThunk(
   async ({ token, postId, postData }, { rejectWithValue }) => {
     try {
       const response = await editPostService(token, postId, postData);
-      console.log(response);
+
       if (response.status === 201) {
         toast.success("Post edited successfully");
         return response.data.posts;
