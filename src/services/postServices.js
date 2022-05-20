@@ -22,12 +22,12 @@ export const getSinglePostService = async (postId) => {
  */
 
 export const createPostService = async (token, postData) => {
-    console.log(token);
-    const response = await axios.post(
-      POSTS_API,
-      { postData },
-      { headers: { authorization: token } }
-    );
+  console.log(postData);
+  const response = await axios.post(
+    POSTS_API,
+    { content: postData },
+    { headers: { authorization: token } }
+  );
   return response;
 };
 
@@ -47,6 +47,7 @@ export const deletePostService = async (token, postId) => {
  */
 
 export const editPostService = async (token, postId, postData) => {
+  console.log(token, postId, postData);
   const response = await axios.post(
     `${POSTS_API}/edit/${postId}`,
     {

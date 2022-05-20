@@ -32,7 +32,7 @@ export function Signup() {
   const [userDetails, setUserDetails] = useState({
     firstName: "",
     lastName: "",
-    email: "",
+    username: "",
     password: "",
     confirmPassword: "",
   });
@@ -46,7 +46,7 @@ export function Signup() {
     if (
       userDetails.firstName === "" ||
       userDetails.lastName === "" ||
-      userDetails.email === "" ||
+      userDetails.username === "" ||
       userDetails.password === ""
     ) {
       toast.error("Please enter all the fields");
@@ -103,14 +103,14 @@ export function Signup() {
                 </FormControl>
               </Box>
             </HStack>
-            <FormControl id='email' isRequired>
-              <FormLabel>Email address</FormLabel>
+            <FormControl id='username' isRequired>
+              <FormLabel>username</FormLabel>
               <Input
-                type='email'
-                placeholder='johndoe@gmail.com'
+                type='test'
+                placeholder='johnDoe123'
                 onChange={changeHandler}
-                value={userDetails.email}
-                name='email'
+                value={userDetails.username}
+                name='username'
               />
             </FormControl>
             <FormControl id='password' isRequired>

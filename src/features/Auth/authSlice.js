@@ -14,17 +14,21 @@ const initialState = {
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ username, password }, { rejectWithValue }) => {
     try {
-      const response = await loginService(email, password);
+      const response = await loginService(username, password);
       if (response.status === 200) {
         localStorage?.setItem(
           "SGtoken",
           JSON.stringify(response.data.encodedToken)
         );
+        localStorage?.setItem(
+          "SGuser",
+          JSON.stringify(response.data.foundUser)
+        );
         toast.success("You are logged in");
+        return response.data;
       }
-      return response.data;
     } catch (error) {
       const { response } = error;
       console.log(error.response);
@@ -40,9 +44,17 @@ export const signupUser = createAsyncThunk(
     try {
       const response = await signupService(userDetails);
       if (response.status === 201) {
-        console.log(response.data);
+        localStorage?.setItem(
+          "SGtoken",
+          JSON.stringify(response.data.encodedToken)
+        );
+        localStorage?.setItem(
+          "SGuser",
+          JSON.stringify(response.data.createdUser)
+        );
+        toast.success("You are logged in");
+        return response.data;
       }
-      return response.data;
     } catch (error) {
       const { response } = error;
       console.log(error.response);
@@ -57,7 +69,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
+    logout: () => {
+      localStorage.removeItem("SGtoken");
+      localStorage.removeItem("SGuser");
       return { ...initialState };
     },
   },

@@ -28,7 +28,6 @@ export const getUserAllPosts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await getPostsService();
-
       if (response.status === 200) {
         return response.data.posts;
       }
@@ -40,9 +39,10 @@ export const getUserAllPosts = createAsyncThunk(
 
 export const createUserPost = createAsyncThunk(
   "posts/createUserPost",
-  async ({ token, postData }, { rejectWithValue }) => {
+  async ({ content }, { rejectWithValue }) => {
+    const token = JSON.parse(localStorage.getItem("SGtoken"));
     try {
-      const response = await createPostService(token, postData);
+      const response = await createPostService(token, content);
       console.log(response.data.posts);
       if (response.status === 201) {
         toast.success("Post created successfully!");
@@ -58,8 +58,9 @@ export const editUserPost = createAsyncThunk(
   "posts/editUserPost",
   async ({ token, postId, postData }, { rejectWithValue }) => {
     try {
-      const response = editPostService(token, postId, postData);
-      if (response.status === 200) {
+      const response = await editPostService(token, postId, postData);
+      console.log(response);
+      if (response.status === 201) {
         toast.success("Post edited successfully");
         return response.data.posts;
       }
@@ -74,7 +75,8 @@ export const deleteUserPost = createAsyncThunk(
   async ({ token, postId }, { rejectWithValue }) => {
     try {
       const response = await deletePostService(token, postId);
-      if (response.status === 200) {
+      console.log(response);
+      if (response.status === 201) {
         toast.success("Post deleted successfully");
         return response.data.posts;
       }
@@ -89,7 +91,7 @@ const postSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [getUserAllPosts.pending]: (state, { payload }) => {
+    [getUserAllPosts.pending]: (state) => {
       state.postStatus = "loading";
     },
     [getUserAllPosts.fulfilled]: (state, { payload }) => {
@@ -101,7 +103,7 @@ const postSlice = createSlice({
       state.authStatus = "rejected";
       state.postError = payload.errors;
     },
-    [createUserPost.pending]: (state, { payload }) => {
+    [createUserPost.pending]: (state) => {
       state.postStatus = "loading";
     },
     [createUserPost.fulfilled]: (state, { payload }) => {
