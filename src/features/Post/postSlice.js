@@ -43,7 +43,6 @@ export const createUserPost = createAsyncThunk(
     const token = JSON.parse(localStorage.getItem("SGtoken"));
     try {
       const response = await createPostService(token, postData);
-      console.log(response.data.posts);
       if (response.status === 201) {
         toast.success("Post created successfully!");
         return response.data.posts;
