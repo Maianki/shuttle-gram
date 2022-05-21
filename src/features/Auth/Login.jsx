@@ -25,7 +25,7 @@ export function Login() {
   const dispatch = useDispatch();
 
   const [userDetails, setUserDetails] = useState({
-    email: "",
+    username: "",
     password: "",
     isRememberMe: true,
   });
@@ -36,8 +36,8 @@ export function Login() {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    if (userDetails.email === "" || userDetails.password === "") {
-      toast.error("Please enter both email and password");
+    if (userDetails.username === "" || userDetails.password === "") {
+      toast.error("Please enter both username and password");
     } else {
       dispatch(loginUser(userDetails));
     }
@@ -47,10 +47,10 @@ export function Login() {
     e.preventDefault();
     setUserDetails({
       ...userDetails,
-      email: "johndoe@gmail.com",
+      username: "johnDoe123",
       password: "johnDoe123",
     });
-    dispatch(loginUser({ email: "johndoe@gmail.com", password: "johnDoe123" }));
+    dispatch(loginUser({ username: "johnDoe123", password: "johnDoe123" }));
     navigate("/home");
   };
   return (
@@ -82,14 +82,14 @@ export function Login() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id='email' isRequired>
-              <FormLabel>Email address</FormLabel>
+            <FormControl id='username' isRequired>
+              <FormLabel>Username</FormLabel>
               <Input
-                type='email'
-                placeholder='johndoe@gmail.com'
+                type='username'
+                placeholder='johnDoe123'
                 onChange={changeHandler}
-                value={userDetails.email}
-                name='email'
+                value={userDetails.username}
+                name='username'
               />
             </FormControl>
             <FormControl id='password' isRequired>

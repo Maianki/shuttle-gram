@@ -18,6 +18,8 @@ export function SidebarRight() {
   return (
     <Flex
       spacing={4}
+      position='sticky'
+      top='20'
       w={"20rem"}
       fontSize={"xl"}
       height={"calc(100vh - 80px)"}

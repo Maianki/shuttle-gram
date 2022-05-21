@@ -1,0 +1,7 @@
+.isNavLinkActive {
+    font-weight: 600;
+}
+
+.isNavLinkInactive {
+    font-weight: 400;
+}

@@ -1,6 +1,7 @@
 import { AiOutlineHome } from "react-icons/ai";
 import { AiOutlineRocket } from "react-icons/ai";
 import { BiBookmarks, BiLike, BiDislike } from "react-icons/bi";
+import { BsFillBookmarksFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { FcLikePlaceholder } from "react-icons/fc";
@@ -10,6 +11,7 @@ export {
   AiOutlineHome,
   AiOutlineRocket,
   BiBookmarks,
+  BsFillBookmarksFill,
   CgProfile,
   FaRegCommentAlt,
   FcLikePlaceholder,
