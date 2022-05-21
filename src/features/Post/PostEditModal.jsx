@@ -24,7 +24,7 @@ export function PostEditModal({ onClose, postData, isOpen, postId }) {
   };
 
   const editPostHandler = async () => {
-    dispatch(editUserPost({ token: userToken, postId, postData: content }));
+    dispatch(editUserPost({ token: userToken, postId, content }));
     setContent("");
     onClose();
   };

@@ -98,7 +98,6 @@ export const addToBookmarksService = async (token, postId) => {
  * Service to remove post from bookmarks
  */
 export const removeFromBookmarksService = async (token, postId) => {
-  console.log("remove bookmarks", token, postId);
   const response = await axios.post(
     `${USERS_API}/remove-bookmark/${postId}`,
     {},

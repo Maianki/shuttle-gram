@@ -39,10 +39,10 @@ export const getUserAllPosts = createAsyncThunk(
 
 export const createUserPost = createAsyncThunk(
   "posts/createUserPost",
-  async ({ content }, { rejectWithValue }) => {
+  async (postData, { rejectWithValue }) => {
     const token = JSON.parse(localStorage.getItem("SGtoken"));
     try {
-      const response = await createPostService(token, content);
+      const response = await createPostService(token, postData);
       console.log(response.data.posts);
       if (response.status === 201) {
         toast.success("Post created successfully!");
@@ -56,9 +56,9 @@ export const createUserPost = createAsyncThunk(
 
 export const editUserPost = createAsyncThunk(
   "posts/editUserPost",
-  async ({ token, postId, postData }, { rejectWithValue }) => {
+  async ({ token, postId, content }, { rejectWithValue }) => {
     try {
-      const response = await editPostService(token, postId, postData);
+      const response = await editPostService(token, postId, content);
 
       if (response.status === 201) {
         toast.success("Post edited successfully");

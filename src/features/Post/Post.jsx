@@ -51,7 +51,7 @@ export function Post({
   };
 
   return (
-    <VStack shadow={"md"} py={2} px={4} my={4} alignItems={"stretch"}>
+    <VStack shadow={"md"} py={2} px={4} my={4} alignItems={"flex-start"}>
       <HStack px={4} justifyContent='space-between'>
         <Box display={"flex"} alignItems='center'>
           <Avatar name={`${firstName} ${lastName}`} src={profilePic} />

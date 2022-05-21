@@ -21,11 +21,10 @@ export const getSinglePostService = async (postId) => {
  * Service to create a post
  */
 
-export const createPostService = async (token, postData) => {
-  console.log(postData);
+export const createPostService = async (token, content) => {
   const response = await axios.post(
     POSTS_API,
-    { content: postData },
+    { postData: content },
     { headers: { authorization: token } }
   );
   return response;
@@ -46,12 +45,11 @@ export const deletePostService = async (token, postId) => {
  * Service to edit the post
  */
 
-export const editPostService = async (token, postId, postData) => {
-  console.log(token, postId, postData);
+export const editPostService = async (token, postId, content) => {
   const response = await axios.post(
     `${POSTS_API}/edit/${postId}`,
     {
-      postData,
+      postData: { content },
     },
     {
       headers: { authorization: token },
