@@ -14,7 +14,7 @@ function App() {
   const { userToken: token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getAllBookmarks(token));
+    dispatch(getAllBookmarks({ token }));
   }, [dispatch, token]);
 
   return (

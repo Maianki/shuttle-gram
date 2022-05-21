@@ -38,14 +38,15 @@ export function Post({
 
   const dispatch = useDispatch();
   const handleBookmarks = () => {
-    if (allBookmarks.find((post) => post._id === postId)) {
-      dispatch(removeFromBookmarks(token, postId));
+    if (allBookmarks.some((post) => post._id === postId)) {
+      console.log("removed");
+      dispatch(removeFromBookmarks({ token, postId }));
     } else {
-      dispatch(addToBookmarks(token, postId));
+      dispatch(addToBookmarks({ token, postId }));
     }
   };
 
-  const deletePostHandler = async () => {
+  const deletePostHandler = () => {
     dispatch(deleteUserPost({ token, postId }));
   };
 
@@ -96,7 +97,7 @@ export function Post({
           <FaRegCommentAlt />
         </Button>
         <Button onClick={handleBookmarks}>
-          {allBookmarks.find((post) => post._id === postId) ? (
+          {allBookmarks.some((post) => post._id === postId) ? (
             <BsFillBookmarksFill />
           ) : (
             <BiBookmarks />

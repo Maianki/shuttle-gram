@@ -48,7 +48,7 @@ export const addToBookmarks = createAsyncThunk(
   async ({ token, postId }, { rejectWithValue }) => {
     try {
       const response = await addToBookmarksService(token, postId);
-      if (response.status === 201) {
+      if (response.status === 200) {
         return response.data.bookmarks;
       }
     } catch (error) {
@@ -58,14 +58,16 @@ export const addToBookmarks = createAsyncThunk(
 );
 
 export const removeFromBookmarks = createAsyncThunk(
-  "users/addToBookmarks",
+  "users/removeFromBookmarks",
   async ({ token, postId }, { rejectWithValue }) => {
     try {
+      console.log(token, postId);
       const response = await removeFromBookmarksService(token, postId);
-      if (response.status === 201) {
+      if (response.status === 200) {
         return response.data.bookmarks;
       }
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.response.data);
     }
   }
