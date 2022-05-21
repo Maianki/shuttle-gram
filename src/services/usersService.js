@@ -15,8 +15,8 @@ export const getAllUsersService = async () => {
  * Service to get a particular user from the db
  */
 
-export const getSingleUserService = async (userId) => {
-  const response = await axios.get(`${USERS_API}/userId`);
+export const getSingleUserService = async (username) => {
+  const response = await axios.get(`${USERS_API}/${username}`);
   return response;
 };
 

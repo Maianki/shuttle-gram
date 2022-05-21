@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  editUserService,
+  getSingleUserService,
   getAllUsersService,
   getAllBookmarksService,
   addToBookmarksService,
@@ -14,6 +16,34 @@ const initialState = {
   usersStatus: "idle",
   usersError: null,
 };
+
+export const getSingleUser = createAsyncThunk(
+  "users/getSingleUser",
+  async ({ username }, { rejectWithValue }) => {
+    try {
+      const response = await getSingleUserService(username);
+      if (response.status === 200) {
+        return response.data.user;
+      }
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const editUser = createAsyncThunk(
+  "users/editUser",
+  async ({ token, userData }, { rejectWithValue }) => {
+    try {
+      const response = await editUserService(token, userData);
+      if (response.status === 201) {
+        return response.data.user;
+      }
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const getAllUsers = createAsyncThunk(
   "users/getAllUsers",
@@ -122,6 +152,30 @@ const usersSlice = createSlice({
       state.usersStatus = "success";
     },
     [removeFromBookmarks.rejected]: (state, { payload }) => {
+      console.log(payload);
+      state.usersStatus = "rejected";
+      state.postError = payload.errors;
+    },
+    [getSingleUser.pending]: (state) => {
+      state.usersStatus = "loading";
+    },
+    [getSingleUser.fulfilled]: (state, { payload }) => {
+      state.currentUser = payload;
+      state.usersStatus = "success";
+    },
+    [getSingleUser.rejected]: (state, { payload }) => {
+      console.log(payload);
+      state.usersStatus = "rejected";
+      state.postError = payload.errors;
+    },
+    [editUser.pending]: (state) => {
+      state.usersStatus = "loading";
+    },
+    [editUser.fulfilled]: (state, { payload }) => {
+      state.currentUser = payload;
+      state.usersStatus = "success";
+    },
+    [editUser.rejected]: (state, { payload }) => {
       console.log(payload);
       state.usersStatus = "rejected";
       state.postError = payload.errors;
