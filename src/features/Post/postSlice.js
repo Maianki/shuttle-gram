@@ -43,7 +43,7 @@ export const getAllPostsOfSingleUser = createAsyncThunk(
   async ({ username }, { rejectWithValue }) => {
     try {
       const response = await getAllPostsOfSingleUserService(username);
-      console.log(response);
+
       if (response.status === 200) {
         return response.data.posts;
       }
@@ -126,7 +126,6 @@ const postSlice = createSlice({
       state.postStatus = "success";
     },
     [createUserPost.rejected]: (state, { payload }) => {
-      console.log(payload);
       state.postStatus = "rejected";
       state.postError = payload.errors;
     },
@@ -138,7 +137,6 @@ const postSlice = createSlice({
       state.postStatus = "success";
     },
     [editUserPost.rejected]: (state, { payload }) => {
-      console.log(payload);
       state.postStatus = "rejected";
       state.postError = payload.errors;
     },
@@ -150,7 +148,6 @@ const postSlice = createSlice({
       state.postStatus = "success";
     },
     [deleteUserPost.rejected]: (state, { payload }) => {
-      console.log(payload);
       state.postStatus = "rejected";
       state.postError = payload.errors;
     },
@@ -162,7 +159,6 @@ const postSlice = createSlice({
       state.postStatus = "success";
     },
     [getAllPostsOfSingleUser.rejected]: (state, { payload }) => {
-      console.log(payload);
       state.postStatus = "rejected";
       state.postError = payload.errors;
     },
