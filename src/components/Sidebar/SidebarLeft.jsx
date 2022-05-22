@@ -60,7 +60,7 @@ export function SidebarLeft() {
           >
             <Flex alignItems={"center"} lineHeight={10}>
               <AiOutlineRocket />
-              <Box px={2}>Profile</Box>
+              <Box px={2}>Explore</Box>
             </Flex>
           </NavLink>
 

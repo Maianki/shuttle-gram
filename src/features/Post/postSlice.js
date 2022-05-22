@@ -7,6 +7,7 @@ import {
   deletePostService,
   editPostService,
   likePostService,
+  getAllPostsOfSingleUserService,
   dislikePostService,
   getAllCommentService,
   addCommentsService,
@@ -28,6 +29,21 @@ export const getUserAllPosts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await getPostsService();
+      if (response.status === 200) {
+        return response.data.posts;
+      }
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getAllPostsOfSingleUser = createAsyncThunk(
+  "posts/getAllPostsOfSpecificUser",
+  async ({ username }, { rejectWithValue }) => {
+    try {
+      const response = await getAllPostsOfSingleUserService(username);
+
       if (response.status === 200) {
         return response.data.posts;
       }
@@ -95,11 +111,11 @@ const postSlice = createSlice({
     },
     [getUserAllPosts.fulfilled]: (state, { payload }) => {
       state.allPosts = payload;
-      state.authStatus = "success";
+      state.postStatus = "success";
     },
     [getUserAllPosts.rejected]: (state, { payload }) => {
       console.log(payload);
-      state.authStatus = "rejected";
+      state.postStatus = "rejected";
       state.postError = payload.errors;
     },
     [createUserPost.pending]: (state) => {
@@ -107,11 +123,10 @@ const postSlice = createSlice({
     },
     [createUserPost.fulfilled]: (state, { payload }) => {
       state.allPosts = payload;
-      state.authStatus = "success";
+      state.postStatus = "success";
     },
     [createUserPost.rejected]: (state, { payload }) => {
-      console.log(payload);
-      state.authStatus = "rejected";
+      state.postStatus = "rejected";
       state.postError = payload.errors;
     },
     [editUserPost.pending]: (state, { payload }) => {
@@ -119,11 +134,10 @@ const postSlice = createSlice({
     },
     [editUserPost.fulfilled]: (state, { payload }) => {
       state.allPosts = payload;
-      state.authStatus = "success";
+      state.postStatus = "success";
     },
     [editUserPost.rejected]: (state, { payload }) => {
-      console.log(payload);
-      state.authStatus = "rejected";
+      state.postStatus = "rejected";
       state.postError = payload.errors;
     },
     [deleteUserPost.pending]: (state, { payload }) => {
@@ -131,11 +145,21 @@ const postSlice = createSlice({
     },
     [deleteUserPost.fulfilled]: (state, { payload }) => {
       state.allPosts = payload;
-      state.authStatus = "success";
+      state.postStatus = "success";
     },
     [deleteUserPost.rejected]: (state, { payload }) => {
-      console.log(payload);
-      state.authStatus = "rejected";
+      state.postStatus = "rejected";
+      state.postError = payload.errors;
+    },
+    [getAllPostsOfSingleUser.pending]: (state, { payload }) => {
+      state.postStatus = "loading";
+    },
+    [getAllPostsOfSingleUser.fulfilled]: (state, { payload }) => {
+      state.userPosts = payload;
+      state.postStatus = "success";
+    },
+    [getAllPostsOfSingleUser.rejected]: (state, { payload }) => {
+      state.postStatus = "rejected";
       state.postError = payload.errors;
     },
   },

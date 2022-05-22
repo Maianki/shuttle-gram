@@ -1,4 +1,4 @@
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome, AiFillCamera } from "react-icons/ai";
 import { AiOutlineRocket } from "react-icons/ai";
 import { BiBookmarks, BiLike, BiDislike } from "react-icons/bi";
 import { BsFillBookmarksFill } from "react-icons/bs";
@@ -9,6 +9,7 @@ import { FaEllipsisV } from "react-icons/fa";
 import { BiAbacus } from "react-icons/bi";
 export {
   AiOutlineHome,
+  AiFillCamera,
   AiOutlineRocket,
   BiBookmarks,
   BsFillBookmarksFill,
