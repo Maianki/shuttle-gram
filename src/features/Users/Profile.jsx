@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Container, Flex, Heading, HStack } from "@chakra-ui/react";
 import { SidebarLeft, SidebarRight, Filters } from "components";
 import { Post } from "features";
 import { ProfileCard } from "./ProfileCard";
+import { getAllPostsOfSingleUser } from "features/Post/postSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export function Profile() {
+  const dispatch = useDispatch();
+
+  const {
+    auth: { user },
+    posts: { userPosts },
+  } = useSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(getAllPostsOfSingleUser({ username: user.username }));
+  }, [dispatch, user.username]);
+
+  console.log(user, userPosts);
+
   return (
     <Container
       maxW={1280}
@@ -22,9 +37,9 @@ export function Profile() {
           </Heading>
           <Filters />
         </HStack>
-        {/* {posts.map((post) => (
+        {userPosts.map((post) => (
           <Post key={post._id} post={post} />
-        ))} */}
+        ))}
       </Flex>
       <SidebarRight />
     </Container>

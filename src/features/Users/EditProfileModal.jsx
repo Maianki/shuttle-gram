@@ -17,14 +17,16 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { AiFillCamera } from "react-icons/ai";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editUser } from "./usersSlice";
+import { cloudinaryAPIService } from "services";
 
 export function EditProfileModal({
   isOpen,
   onClose,
   onOpen,
+  profilePic,
   portfolio: portfolioLink,
   bio: bioData,
 }) {
@@ -32,6 +34,7 @@ export function EditProfileModal({
   const { userToken: token } = useSelector((state) => state.auth);
   const [portfolio, setPortfolio] = useState(portfolioLink);
   const [bio, setBio] = useState(bioData);
+  const [url, setUrl] = useState();
 
   const changeBioHandler = (e) => {
     setBio(e.target.value);
@@ -42,9 +45,24 @@ export function EditProfileModal({
   };
 
   const editUserDataHandler = () => {
-    dispatch(editUser({ token, userData: { bio, portfolio } }));
+    dispatch(
+      editUser({ token, userData: { bio, portfolio, profilePic: url } })
+    );
     onClose();
   };
+
+  const handleImageSelect = async (e) => {
+    try {
+      let res = await cloudinaryAPIService(e.target.files[0]);
+      let json = await res.json();
+      setUrl(json.secure_url);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const inputFileRef = useRef();
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -53,11 +71,15 @@ export function EditProfileModal({
           <ModalHeader>Edit Profile</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Stack alignItems={"center"} pos={"relative"}>
+            <Stack
+              alignItems={"center"}
+              pos={"relative"}
+              onClick={() => inputFileRef.current.click()}
+            >
               <Avatar
                 size='md'
-                name='Kent Dodds'
-                src='https://bit.ly/kent-c-dodds'
+                name='Profile pic'
+                src={profilePic}
                 cursor={"pointer"}
               />
               <Box
@@ -70,6 +92,12 @@ export function EditProfileModal({
                 <AiFillCamera />
               </Box>
             </Stack>
+            <Input
+              type={"file"}
+              onChange={handleImageSelect}
+              ref={inputFileRef}
+              hidden
+            />
             <FormControl>
               <FormLabel>Bio</FormLabel>
               <Input

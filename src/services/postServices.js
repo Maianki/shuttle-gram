@@ -2,9 +2,17 @@ import { POSTS_API, LIKES_API, DISLIKES_API, COMMENTS_API } from "utils";
 import axios from "axios";
 
 /**
+ * Service to return all posts of single users
+ */
+export const getAllPostsOfSingleUserService = async (username) => {
+  const response = await axios.get(`${POSTS_API}/user/${username}`);
+  return response;
+};
+
+/**
  * Service to return all posts
  */
-export const getPostsService = async () => {
+ export const getPostsService = async () => {
   const response = await axios.get(POSTS_API);
   return response;
 };
