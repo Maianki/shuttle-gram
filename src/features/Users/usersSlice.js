@@ -15,6 +15,8 @@ const initialState = {
   allBookmarks: [],
   usersStatus: "idle",
   usersError: null,
+  currentUserStatus: "idle",
+  currentUserError: null,
 };
 
 export const getSingleUser = createAsyncThunk(
@@ -157,15 +159,15 @@ const usersSlice = createSlice({
       state.postError = payload.errors;
     },
     [getSingleUser.pending]: (state) => {
-      state.usersStatus = "loading";
+      state.currentUserStatus = "loading";
     },
     [getSingleUser.fulfilled]: (state, { payload }) => {
       state.currentUser = payload;
-      state.usersStatus = "success";
+      state.currentUserStatus = "success";
     },
     [getSingleUser.rejected]: (state, { payload }) => {
       console.log(payload);
-      state.usersStatus = "rejected";
+      state.currentUserStatus = "rejected";
       state.postError = payload.errors;
     },
     [editUser.pending]: (state) => {

@@ -19,8 +19,6 @@ export function Profile() {
     dispatch(getAllPostsOfSingleUser({ username: user.username }));
   }, [dispatch, user.username]);
 
-  console.log(user, userPosts);
-
   return (
     <Container
       maxW={1280}

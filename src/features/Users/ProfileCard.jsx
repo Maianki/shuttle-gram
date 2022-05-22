@@ -22,7 +22,7 @@ export function ProfileCard() {
   const dispatch = useDispatch();
   const {
     auth: { user },
-    users: { currentUser, usersStatus },
+    users: { currentUser, currentUserStatus },
   } = useSelector((state) => state);
 
   useEffect(() => {
@@ -31,8 +31,8 @@ export function ProfileCard() {
 
   return (
     <Center py={6}>
-      {usersStatus === "loading" && <h1>Loading..</h1>}
-      {usersStatus === "success" && (
+      {currentUserStatus === "loading" && <h1>Loading..</h1>}
+      {currentUserStatus === "success" && (
         <>
           <EditProfileModal
             isOpen={isOpen}
