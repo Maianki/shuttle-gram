@@ -43,7 +43,6 @@ export const getAllPostsOfSingleUser = createAsyncThunk(
   async ({ username }, { rejectWithValue }) => {
     try {
       const response = await getAllPostsOfSingleUserService(username);
-
       if (response.status === 200) {
         return response.data.posts;
       }

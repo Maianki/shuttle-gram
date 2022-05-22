@@ -12,12 +12,12 @@ export function Profile() {
 
   const {
     auth: { user },
-    posts: { userPosts },
+    posts: { userPosts, allPosts },
   } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(getAllPostsOfSingleUser({ username: user.username }));
-  }, [dispatch, user.username]);
+  }, [dispatch, user.username, allPosts]);
 
   return (
     <Container

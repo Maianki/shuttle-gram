@@ -29,6 +29,7 @@ import { PostEditModal } from "./PostEditModal";
 import React from "react";
 
 export function Post({
+  post,
   post: { content, firstName, lastName, profilePic, username, _id: postId },
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -93,7 +94,9 @@ export function Post({
         postId={postId}
       />
 
-      <Text px={2}>{content}</Text>
+      <Text px={6} pt={1}>
+        {content}
+      </Text>
       <Flex justifyContent={"space-around"} py={4} px={4} w={"full"}>
         <Button>
           <BiLike />
