@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+
 import {
   getPostsService,
   getSinglePostService,
@@ -9,7 +10,6 @@ import {
   likePostService,
   getAllPostsOfSingleUserService,
   dislikePostService,
-  getAllCommentService,
   addCommentsService,
   editCommentsService,
   deleteCommentService,
@@ -20,6 +20,7 @@ const initialState = {
   allPosts: [],
   likes: [],
   comments: [],
+  commentsStatus: [],
   postStatus: "idle",
   postError: null,
 };
@@ -100,6 +101,38 @@ export const deleteUserPost = createAsyncThunk(
   }
 );
 
+export const addComment = createAsyncThunk(
+  "posts/getAllComments",
+  async ({ token, postId, commentData }, { rejectWithValue }) => {
+    try {
+      const response = await addCommentsService(token, postId, commentData);
+      if (response.status === 201) {
+        toast.success("comment added successfully");
+        return { comments: response.data.comments, postId };
+      }
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteComment = createAsyncThunk(
+  "posts/deleteComment",
+  async ({ token, postId, commentId }, { rejectWithValue }) => {
+    try {
+      const response = await deleteCommentService(token, postId, commentId);
+
+      if (response.status === 201) {
+        toast.success("comment deleted successfully");
+        return { comments: response.data.comments, postId };
+      }
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "posts",
   initialState,
@@ -158,6 +191,36 @@ const postSlice = createSlice({
       state.postStatus = "success";
     },
     [getAllPostsOfSingleUser.rejected]: (state, { payload }) => {
+      state.postStatus = "rejected";
+      state.postError = payload.errors;
+    },
+    [deleteComment.pending]: (state) => {
+      state.postStatus = "loading";
+    },
+    [deleteComment.fulfilled]: (state, { payload }) => {
+      const postIndex = state.allPosts.findIndex(
+        (post) => post._id === payload.postId
+      );
+
+      state.allPosts[postIndex].comments = payload?.comments;
+      state.postStatus = "success";
+    },
+    [deleteComment.rejected]: (state, { payload }) => {
+      state.postStatus = "rejected";
+      state.postError = payload;
+    },
+    [addComment.pending]: (state) => {
+      state.postStatus = "loading";
+    },
+    [addComment.fulfilled]: (state, { payload }) => {
+      const postIndex = state.allPosts.findIndex(
+        (post) => post._id === payload.postId
+      );
+
+      state.allPosts[postIndex].comments = payload?.comments;
+      state.postStatus = "success";
+    },
+    [addComment.rejected]: (state, { payload }) => {
       state.postStatus = "rejected";
       state.postError = payload.errors;
     },

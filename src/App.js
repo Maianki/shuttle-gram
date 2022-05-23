@@ -1,7 +1,7 @@
 import "./App.css";
 import { useEffect } from "react";
 import { Navbar, RequireAuth, RestrictAuth } from "components";
-import { Login, Signup, Home, Bookmarks, Profile } from "features";
+import { Login, Signup, Home, Bookmarks, Profile, SinglePost } from "features";
 import { Routes, Route } from "react-router-dom";
 import Mockman from "mockman-js";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,6 +43,7 @@ function App() {
           <Route path='/home' element={<Home />}></Route>
           <Route path='/bookmarks' element={<Bookmarks />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
+          <Route path='/post/:postId' element={<SinglePost />}></Route>
         </Route>
         <Route path='/mockman' element={<Mockman />}></Route>
       </Routes>
