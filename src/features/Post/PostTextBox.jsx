@@ -9,7 +9,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { createUserPost } from "./postSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export function PostTextBox() {
   const [value, setValue] = useState("");
@@ -24,6 +24,7 @@ export function PostTextBox() {
     dispatch(createUserPost({ content: value }));
     setValue("");
   };
+
   return (
     <Flex
       direction={"column"}

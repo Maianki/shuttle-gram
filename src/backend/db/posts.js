@@ -27,7 +27,7 @@ export const posts = [
       {
         _id: uuid(),
         username: "sarah420",
-        text: "Interesting",
+        text: "Will check this one.",
         votes: {
           upvotedBy: [],
           downvotedBy: [],
@@ -36,7 +36,7 @@ export const posts = [
       {
         _id: uuid(),
         username: "ankit12",
-        text: "Wow!",
+        text: "Gazab bhai",
         votes: {
           upvotedBy: [],
           downvotedBy: [],

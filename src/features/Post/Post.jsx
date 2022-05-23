@@ -3,7 +3,6 @@ import {
   VStack,
   Avatar,
   Text,
-  Button,
   IconButton,
   Box,
   Flex,
@@ -13,6 +12,7 @@ import {
   MenuList,
   MenuItem,
   useDisclosure,
+  Divider,
 } from "@chakra-ui/react";
 import {
   FaRegCommentAlt,
@@ -22,21 +22,35 @@ import {
   BiDislike,
   FaEllipsisV,
 } from "assets";
-import { deleteUserPost } from "./postSlice";
+import { Comment } from "./Comment";
+import { deleteUserPost, getAllComments } from "./postSlice";
 import { addToBookmarks, removeFromBookmarks } from "features/Users/usersSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { PostEditModal } from "./PostEditModal";
-import React from "react";
+import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 
 export function Post({
-  post: { content, firstName, lastName, profilePic, username, _id: postId },
+  post,
+  post: {
+    content,
+    firstName,
+    lastName,
+    profilePic,
+    username,
+    _id: postId,
+    comments,
+  },
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user: currentUser } = useSelector((state) => state.auth);
-  const { userToken: token } = useSelector((state) => state.auth);
-  const { allBookmarks } = useSelector((state) => state.users);
+
+  const {
+    auth: { user: currentUser, userToken: token },
+    users: { allBookmarks },
+  } = useSelector((state) => state);
 
   const dispatch = useDispatch();
+
   const handleBookmarks = () => {
     if (allBookmarks.some((post) => post._id === postId)) {
       console.log("removed");
@@ -68,20 +82,22 @@ export function Post({
           </Text>
         </Box>
         {currentUser.username === username && (
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              aria-label='Options'
-              icon={<FaEllipsisV />}
-              variant='outline'
-              borderRadius={"full"}
-              border={"none"}
-            />
-            <MenuList>
-              <MenuItem onClick={onOpen}>Edit</MenuItem>
-              <MenuItem onClick={deletePostHandler}>Delete</MenuItem>
-            </MenuList>
-          </Menu>
+          <Box>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label='Options'
+                icon={<FaEllipsisV />}
+                variant='ghost'
+                borderRadius={"full"}
+                border={"none"}
+              />
+              <MenuList>
+                <MenuItem onClick={onOpen}>Edit</MenuItem>
+                <MenuItem onClick={deletePostHandler}>Delete</MenuItem>
+              </MenuList>
+            </Menu>
+          </Box>
         )}
       </HStack>
 
@@ -93,22 +109,36 @@ export function Post({
         postId={postId}
       />
 
-      <Text px={2}>{content}</Text>
-      <Flex justifyContent={"space-around"} py={4} px={4} w={"full"}>
-        <Button>
-          <BiLike />
-        </Button>
-        <Button>
-          <FaRegCommentAlt />
-        </Button>
-        <Button onClick={handleBookmarks}>
-          {allBookmarks.some((post) => post._id === postId) ? (
-            <BsFillBookmarksFill />
-          ) : (
-            <BiBookmarks />
-          )}
-        </Button>
+      <Text px={6} pt={1}>
+        {content}
+      </Text>
+      <Divider />
+      <Flex justifyContent={"space-around"} px={4} w={"full"}>
+        <IconButton variant='ghost' aria-label='like' icon={<BiLike />} />
+
+        <Link to={`/post/${postId}`}>
+          <IconButton
+            variant='ghost'
+            aria-label='comment'
+            icon={<FaRegCommentAlt />}
+          />
+        </Link>
+
+        <IconButton
+          onClick={handleBookmarks}
+          variant='ghost'
+          aria-label='bookmarks'
+          icon={
+            allBookmarks.some((post) => post._id === postId) ? (
+              <BsFillBookmarksFill />
+            ) : (
+              <BiBookmarks />
+            )
+          }
+        ></IconButton>
       </Flex>
+      <Divider />
+      <Comment postId={postId} comments={comments} />
     </VStack>
   );
 }

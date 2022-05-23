@@ -149,14 +149,10 @@ export const editCommentsService = async (
  * Service to delete a comment from a particular post.
  */
 
-export const deleteCommentService = async (
-  token,
-  postId,
-  commentId,
-  commentData
-) => {
-  const response = await axios.delete(
+export const deleteCommentService = async (token, postId, commentId) => {
+  const response = await axios.post(
     `${COMMENTS_API}/delete/${postId}/${commentId}`,
+    {},
     {
       headers: { authorization: token },
     }
