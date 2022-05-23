@@ -127,7 +127,6 @@ export const deleteComment = createAsyncThunk(
         return { comments: response.data.comments, postId };
       }
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.response.data);
     }
   }

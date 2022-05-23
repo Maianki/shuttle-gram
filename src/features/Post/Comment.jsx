@@ -48,7 +48,6 @@ export function Comment({ postId, comments }) {
   };
 
   const deleteCommentHandler = (postId, commentId) => {
-    console.log(userToken, " ", postId, " ", commentId);
     dispatch(deleteComment({ token: userToken, postId, commentId }));
   };
 
