@@ -6,6 +6,8 @@ import {
   getAllBookmarksService,
   addToBookmarksService,
   removeFromBookmarksService,
+  addUserToFollowService,
+  removeFromFollowService,
 } from "services";
 
 const initialState = {
@@ -13,10 +15,13 @@ const initialState = {
   userPosts: [],
   allUsers: [],
   allBookmarks: [],
+  followUsers: [],
   usersStatus: "idle",
-  usersError: null,
   currentUserStatus: "idle",
+  followUserStatus: "idle",
   currentUserError: null,
+  usersError: null,
+  followUserError: null,
 };
 
 export const getSingleUser = createAsyncThunk(
@@ -80,6 +85,7 @@ export const addToBookmarks = createAsyncThunk(
   async ({ token, postId }, { rejectWithValue }) => {
     try {
       const response = await addToBookmarksService(token, postId);
+
       if (response.status === 200) {
         return response.data.bookmarks;
       }
@@ -97,6 +103,46 @@ export const removeFromBookmarks = createAsyncThunk(
       const response = await removeFromBookmarksService(token, postId);
       if (response.status === 200) {
         return response.data.bookmarks;
+      }
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const addUserToFollow = createAsyncThunk(
+  "users/addUserToFollow",
+  async ({ token, followUserId }, { rejectWithValue }) => {
+    try {
+      const response = await addUserToFollowService(token, followUserId);
+      console.log(response);
+      if (response.status === 200) {
+        return {
+          user: response.data.user,
+          followUser: response.data.followUser,
+          userId: response.data.user._id,
+        };
+      }
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const removeUserFromFollow = createAsyncThunk(
+  "users/removeUserFromFollow",
+  async ({ token, followUserId }, { rejectWithValue }) => {
+    try {
+      const response = await removeFromFollowService(token, followUserId);
+      console.log(response);
+      if (response.status === 200) {
+        return {
+          user: response.data.user,
+          followUser: response.data.followUser,
+          userId: response.data.user._id,
+        };
       }
     } catch (error) {
       console.log(error);
@@ -181,6 +227,36 @@ const usersSlice = createSlice({
       console.log(payload);
       state.usersStatus = "rejected";
       state.postError = payload.errors;
+    },
+    [addUserToFollow.pending]: (state) => {
+      state.followUserStatus = "loading";
+    },
+    [addUserToFollow.fulfilled]: (state, { payload }) => {
+      state.allUsers = state.allUsers.map((user) =>
+        user._id === payload.userId ? payload.user : user
+      );
+
+      state.followUsers = [...state.followUsers, payload.followUser];
+      state.followUserStatus = "success";
+    },
+    [addUserToFollow.rejected]: (state, { payload }) => {
+      state.followUserStatus = "rejected";
+      state.followUserError = payload.errors;
+    },
+    [removeUserFromFollow.pending]: (state) => {
+      state.followUserStatus = "loading";
+    },
+    [removeUserFromFollow.fulfilled]: (state, { payload }) => {
+      state.allUsers = state.allUsers.filter(
+        (user) => user._id !== payload.userId
+      );
+
+      state.followUsers = payload.user.following;
+      state.followUserStatus = "success";
+    },
+    [removeUserFromFollow.rejected]: (state, { payload }) => {
+      state.followUserStatus = "rejected";
+      state.followUserError = payload.errors;
     },
   },
 });

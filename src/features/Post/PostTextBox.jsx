@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 export function PostTextBox() {
   const [value, setValue] = useState("");
+  const {
+    auth: { user },
+  } = useSelector((state) => state);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -35,7 +38,10 @@ export function PostTextBox() {
       px={2}
     >
       <HStack>
-        <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
+        <Avatar
+          name={`${user.firstName} ${user.lastName}`}
+          src={user.profilePic}
+        />
         <Textarea
           value={value}
           onChange={handleInputChange}

@@ -11,16 +11,13 @@ import {
   getAllPostsOfSingleUserService,
   dislikePostService,
   addCommentsService,
-  editCommentsService,
   deleteCommentService,
 } from "services";
 
 const initialState = {
   userPosts: [],
   allPosts: [],
-  likes: [],
-  comments: [],
-  commentsStatus: [],
+  filterBy: "allPosts",
   postStatus: "idle",
   postError: null,
 };
@@ -30,6 +27,7 @@ export const getUserAllPosts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await getPostsService();
+
       if (response.status === 200) {
         return response.data.posts;
       }
@@ -59,6 +57,7 @@ export const createUserPost = createAsyncThunk(
     const token = JSON.parse(localStorage.getItem("SGtoken"));
     try {
       const response = await createPostService(token, postData);
+      console.log(response);
       if (response.status === 201) {
         toast.success("Post created successfully!");
         return response.data.posts;
@@ -132,10 +131,45 @@ export const deleteComment = createAsyncThunk(
   }
 );
 
+export const likePost = createAsyncThunk(
+  "post/likePost",
+  async ({ token, postId }, { rejectWithValue }) => {
+    try {
+      const response = await likePostService(token, postId);
+
+      if (response.status === 201) {
+        return response.data.posts;
+      }
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const dislikePost = createAsyncThunk(
+  "post/likePost",
+  async ({ token, postId }, { rejectWithValue }) => {
+    try {
+      const response = await dislikePostService(token, postId);
+
+      console.log(response.data.posts);
+      if (response.status === 201) {
+        return response.data.posts;
+      }
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    sortBy: (state, { payload }) => {
+      state.filterBy = payload;
+    },
+  },
   extraReducers: {
     [getUserAllPosts.pending]: (state) => {
       state.postStatus = "loading";
@@ -223,9 +257,32 @@ const postSlice = createSlice({
       state.postStatus = "rejected";
       state.postError = payload.errors;
     },
+    [likePost.pending]: (state) => {
+      state.postStatus = "loading";
+    },
+    [likePost.fulfilled]: (state, { payload }) => {
+      state.allPosts = payload;
+      state.postStatus = "success";
+    },
+    [likePost.rejected]: (state, { payload }) => {
+      state.postStatus = "rejected";
+      console.error(payload);
+    },
+    [dislikePost.pending]: (state) => {
+      state.postStatus = "loading";
+    },
+    [dislikePost.fulfilled]: (state, { payload }) => {
+      state.allPosts = payload;
+      state.postStatus = "success";
+    },
+    [dislikePost.rejected]: (state, { payload }) => {
+      state.postStatus = "rejected";
+      console.error(payload);
+    },
   },
 });
 
 const { reducer, actions } = postSlice;
+export const { sortBy } = actions;
 
 export default reducer;

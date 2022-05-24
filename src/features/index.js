@@ -6,4 +6,4 @@ export { Post } from "./Post/Post";
 export { Bookmarks } from "./Bookmarks/Bookmarks";
 export { Profile } from "./Users/Profile";
 export { SinglePost } from "./Post/SinglePost";
-
+export { Explore } from "./Explore/Explore";

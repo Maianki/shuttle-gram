@@ -78,7 +78,7 @@ export const posts = [
         },
       },
     ],
-    createdAt: formatDate(),
+    createdAt: "2022-03-23T10:38:12+05:30",
     updatedAt: formatDate(),
   },
   {
@@ -132,7 +132,7 @@ export const posts = [
     username: "johnDoe123",
     profilePic:
       "https://res.cloudinary.com/dj5aind8q/image/upload/v1653058462/ShuttleGram/John_Doe_x59mkq.jpg",
-    createdAt: formatDate(),
+    createdAt: "2022-01-23T10:38:12+05:30",
     updatedAt: formatDate(),
     comments: [
       {

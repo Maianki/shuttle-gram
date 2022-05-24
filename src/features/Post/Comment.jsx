@@ -82,7 +82,7 @@ export function Comment({ postId, comments }) {
       </HStack>
       {postStatus === "success" &&
         comments?.map(({ username, text, _id }) => {
-          const profileImg = allUsers.find(
+          const profileImg = allUsers?.find(
             (currUser) => currUser.username === username
           )?.profilePic;
 

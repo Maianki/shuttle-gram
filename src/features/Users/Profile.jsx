@@ -26,8 +26,8 @@ export function Profile() {
       display={"flex"}
       mt={20}
     >
-      <SidebarLeft />
-      <Flex grow={1} direction='column'>
+      <SidebarLeft w={"20%"} />
+      <Flex grow={1} direction='column' w={"60%"}>
         <ProfileCard />
         <HStack justifyContent={"space-between"} px={2} py={4}>
           <Heading as='h4' size='md'>
@@ -39,7 +39,7 @@ export function Profile() {
           <Post key={post._id} post={post} />
         ))}
       </Flex>
-      <SidebarRight />
+      <SidebarRight w={"20%"} />
     </Container>
   );
 }

@@ -5,7 +5,14 @@ import { useSelector } from "react-redux";
 import { Post } from "features";
 
 export function Bookmarks() {
-  const { allBookmarks } = useSelector((state) => state.users);
+  const {
+    users: { allBookmarks },
+    posts: { allPosts },
+  } = useSelector((state) => state);
+
+  const bookMarkedPosts = allPosts.filter((post) =>
+    allBookmarks.includes(post._id)
+  );
   return (
     <Container
       maxW={1280}
@@ -13,17 +20,17 @@ export function Bookmarks() {
       display={"flex"}
       mt={20}
     >
-      <SidebarLeft />
-      <Flex grow={1} direction='column'>
-        {allBookmarks.length > 0 ? (
-          allBookmarks.map((post) => <Post key={post._id} post={post} />)
+      <SidebarLeft w={"20%"} />
+      <Flex grow={1} direction='column' w={"60%"}>
+        {bookMarkedPosts.length > 0 ? (
+          bookMarkedPosts.map((post) => <Post key={post._id} post={post} />)
         ) : (
-          <Heading as='h4' size='md' px={2} py={4}>
+          <Heading as='h4' size='md' px={2} py={4} textAlign='center'>
             No Bookmarks added yet
           </Heading>
         )}
       </Flex>
-      <SidebarRight />
+      <SidebarRight w={"20%"} />
     </Container>
   );
 }

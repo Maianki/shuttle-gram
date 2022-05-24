@@ -1,7 +1,15 @@
 import "./App.css";
 import { useEffect } from "react";
 import { Navbar, RequireAuth, RestrictAuth } from "components";
-import { Login, Signup, Home, Bookmarks, Profile, SinglePost } from "features";
+import {
+  Login,
+  Signup,
+  Home,
+  Bookmarks,
+  Profile,
+  SinglePost,
+  Explore,
+} from "features";
 import { Routes, Route } from "react-router-dom";
 import Mockman from "mockman-js";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +19,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const dispatch = useDispatch();
-  const { userToken: token } = useSelector((state) => state.auth);
+  const {
+    auth: { userToken: token },
+    posts: { allPosts },
+  } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(getAllBookmarks({ token }));
@@ -43,6 +54,7 @@ function App() {
           <Route path='/home' element={<Home />}></Route>
           <Route path='/bookmarks' element={<Bookmarks />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
+          <Route path='/explore' element={<Explore />}></Route>
           <Route path='/post/:postId' element={<SinglePost />}></Route>
         </Route>
         <Route path='/mockman' element={<Mockman />}></Route>

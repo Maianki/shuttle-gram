@@ -5,16 +5,46 @@ import {
   InputGroup,
   HStack,
   StackDivider,
-  Box,
   Divider,
   Heading,
   Avatar,
   useColorModeValue,
+  Text,
+  Button,
 } from "@chakra-ui/react";
 import { Search2Icon, SmallAddIcon } from "@chakra-ui/icons";
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addUserToFollow,
+  removeUserFromFollow,
+} from "features/Users/usersSlice";
 
 export function SidebarRight() {
+  const dispatch = useDispatch();
+  const {
+    users: { currentUser, allUsers, followUsers },
+    auth: { userToken, user },
+  } = useSelector((state) => state);
+
+  const followBoxColor = useColorModeValue("primaryDark", "gray.400");
+
+  const usersSuggestion = allUsers.filter(
+    (currUser) =>
+      currUser.username !== user?.username &&
+      !followUsers.some(
+        (followUser) => followUser.username === currUser.username
+      )
+  );
+
+  const btnFollowHandler = (followUserId) => {
+    if (followUsers.some((followUser) => followUser._id === followUserId)) {
+      dispatch(removeUserFromFollow({ token: userToken, followUserId }));
+    } else {
+      dispatch(addUserToFollow({ token: userToken, followUserId }));
+    }
+  };
+
   return (
     <Flex
       spacing={4}
@@ -47,51 +77,47 @@ export function SidebarRight() {
           Who to follow?
         </Heading>
         <Divider />
-        <HStack spacing='24px' p={2}>
-          <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
+        {usersSuggestion.map((user) => {
+          return (
+            <HStack
+              spacing='24px'
+              p={2}
+              key={user._id}
+              justifyContent={"space-between"}
+            >
+              <HStack>
+                <Avatar
+                  name={`${user.firstName} ${user.lastName}`}
+                  src={user.profilePic}
+                />
+                <Text
+                  size='sm'
+                  fontSize={14}
+                >{`${user.firstName} ${user.lastName}`}</Text>
+              </HStack>
 
-          <Heading as='h5' size='sm'>
-            Ankit Kumain
-          </Heading>
-          <Box
-            fontSize={12}
-            display='flex'
-            alignItems={"center"}
-            color={useColorModeValue("primaryDark", "gray.400")}
-          >
-            Follow <SmallAddIcon />
-          </Box>
-        </HStack>
-        <HStack spacing='24px' p={2}>
-          <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
-
-          <Heading as='h5' size='sm'>
-            Ankit Kumain
-          </Heading>
-          <Box
-            fontSize={12}
-            display='flex'
-            alignItems={"center"}
-            color={useColorModeValue("primaryDark", "gray.400")}
-          >
-            Follow <SmallAddIcon />
-          </Box>
-        </HStack>
-        <HStack spacing='24px' p={2}>
-          <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
-
-          <Heading as='h5' size='sm'>
-            Ankit Kumain
-          </Heading>
-          <Box
-            fontSize={12}
-            display='flex'
-            alignItems={"center"}
-            color={useColorModeValue("primaryDark", "gray.400")}
-          >
-            Follow <SmallAddIcon />
-          </Box>
-        </HStack>
+              <Button
+                size={"sm"}
+                color={followBoxColor}
+                variant={"ghost"}
+                onClick={() => btnFollowHandler(user._id)}
+              >
+                {followUsers.some(
+                  (followUser) => followUser._id === user._id
+                ) ? (
+                  <>
+                    <span>following</span>
+                  </>
+                ) : (
+                  <>
+                    <span>follow</span>
+                    <SmallAddIcon />
+                  </>
+                )}
+              </Button>
+            </HStack>
+          );
+        })}
       </Flex>
     </Flex>
   );
