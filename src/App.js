@@ -11,7 +11,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const dispatch = useDispatch();
-  const { userToken: token } = useSelector((state) => state.auth);
+  const {
+    auth: { userToken: token },
+    posts: { allPosts },
+  } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(getAllBookmarks({ token }));

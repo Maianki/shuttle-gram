@@ -11,7 +11,6 @@ import {
   getAllPostsOfSingleUserService,
   dislikePostService,
   addCommentsService,
-  editCommentsService,
   deleteCommentService,
 } from "services";
 
@@ -27,6 +26,7 @@ export const getUserAllPosts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await getPostsService();
+
       if (response.status === 200) {
         return response.data.posts;
       }
@@ -56,6 +56,7 @@ export const createUserPost = createAsyncThunk(
     const token = JSON.parse(localStorage.getItem("SGtoken"));
     try {
       const response = await createPostService(token, postData);
+      console.log(response);
       if (response.status === 201) {
         toast.success("Post created successfully!");
         return response.data.posts;

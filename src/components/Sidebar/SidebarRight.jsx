@@ -46,8 +46,6 @@ export function SidebarRight() {
     }
   };
 
-  console.log(followUsers);
-
   return (
     <Flex
       spacing={4}

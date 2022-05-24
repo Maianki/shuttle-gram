@@ -8,8 +8,11 @@ import {
 } from "@chakra-ui/react";
 
 import { BiAbacus } from "assets";
+import { useSelector } from "react-redux";
 
 export function Filters() {
+  const { posts: allPosts } = useSelector((state) => state);
+
   return (
     <Box>
       <Menu>

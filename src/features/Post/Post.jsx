@@ -126,7 +126,7 @@ export function Post({
           variant='ghost'
           aria-label='like'
           icon={
-            likes.likedBy.some(
+            likes?.likedBy?.some(
               (user) => user.username === currentUser.username
             ) ? (
               <>

@@ -16,7 +16,6 @@ const initialState = {
   allUsers: [],
   allBookmarks: [],
   followUsers: [],
-  unfollowUSers: [],
   usersStatus: "idle",
   currentUserStatus: "idle",
   followUserStatus: "idle",
@@ -86,7 +85,7 @@ export const addToBookmarks = createAsyncThunk(
   async ({ token, postId }, { rejectWithValue }) => {
     try {
       const response = await addToBookmarksService(token, postId);
-      console.log(response.data);
+
       if (response.status === 200) {
         return response.data.bookmarks;
       }
@@ -241,7 +240,6 @@ const usersSlice = createSlice({
       state.followUserStatus = "success";
     },
     [addUserToFollow.rejected]: (state, { payload }) => {
-      console.log(payload);
       state.followUserStatus = "rejected";
       state.followUserError = payload.errors;
     },
@@ -257,7 +255,6 @@ const usersSlice = createSlice({
       state.followUserStatus = "success";
     },
     [removeUserFromFollow.rejected]: (state, { payload }) => {
-      console.log(payload);
       state.followUserStatus = "rejected";
       state.followUserError = payload.errors;
     },
