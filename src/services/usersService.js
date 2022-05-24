@@ -42,13 +42,16 @@ export const editUserService = async (token, userData) => {
  */
 
 export const addUserToFollowService = async (token, followedUserId) => {
+  console.log(token, followedUserId);
   const response = await axios.post(
-    `${FOLLOW_API}/${followedUserId}`,
+    `${FOLLOW_API}${followedUserId}`,
     {},
     {
       headers: { authorization: token },
     }
   );
+
+  console.log(response);
 
   return response;
 };
@@ -58,6 +61,7 @@ export const addUserToFollowService = async (token, followedUserId) => {
  */
 
 export const removeFromFollowService = async (token, followedUserId) => {
+  console.log(token, followedUserId);
   const response = await axios.post(
     `${UNFOLLOW_API}/${followedUserId}`,
     {},
@@ -107,3 +111,4 @@ export const removeFromBookmarksService = async (token, postId) => {
   );
   return response;
 };
+

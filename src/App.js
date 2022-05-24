@@ -43,6 +43,10 @@ function App() {
           <Route path='/home' element={<Home />}></Route>
           <Route path='/bookmarks' element={<Bookmarks />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
+          <Route
+            path='/explore'
+            element={<>This is under construction</>}
+          ></Route>
           <Route path='/post/:postId' element={<SinglePost />}></Route>
         </Route>
         <Route path='/mockman' element={<Mockman />}></Route>

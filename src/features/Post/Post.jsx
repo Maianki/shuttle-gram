@@ -18,21 +18,21 @@ import {
   FaRegCommentAlt,
   BiBookmarks,
   BsFillBookmarksFill,
-  BiLike,
-  BiDislike,
+  AiOutlineLike,
+  AiFillLike,
   FaEllipsisV,
 } from "assets";
 import { Comment } from "./Comment";
-import { deleteUserPost, getAllComments } from "./postSlice";
+import { deleteUserPost, likePost, dislikePost } from "./postSlice";
 import { addToBookmarks, removeFromBookmarks } from "features/Users/usersSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { PostEditModal } from "./PostEditModal";
 import { Link } from "react-router-dom";
-import React, { useEffect } from "react";
 
 export function Post({
   post,
   post: {
+    likes,
     content,
     firstName,
     lastName,
@@ -52,7 +52,7 @@ export function Post({
   const dispatch = useDispatch();
 
   const handleBookmarks = () => {
-    if (allBookmarks.some((post) => post._id === postId)) {
+    if (allBookmarks.some((id) => id === postId)) {
       console.log("removed");
       dispatch(removeFromBookmarks({ token, postId }));
     } else {
@@ -62,6 +62,14 @@ export function Post({
 
   const deletePostHandler = () => {
     dispatch(deleteUserPost({ token, postId }));
+  };
+
+  const postLikesHandler = () => {
+    if (likes.likedBy.some((user) => user.username === currentUser.username)) {
+      dispatch(dislikePost({ token, postId }));
+    } else {
+      dispatch(likePost({ token, postId }));
+    }
   };
 
   return (
@@ -114,7 +122,22 @@ export function Post({
       </Text>
       <Divider />
       <Flex justifyContent={"space-around"} px={4} w={"full"}>
-        <IconButton variant='ghost' aria-label='like' icon={<BiLike />} />
+        <IconButton
+          variant='ghost'
+          aria-label='like'
+          icon={
+            likes.likedBy.some(
+              (user) => user.username === currentUser.username
+            ) ? (
+              <>
+                <AiFillLike /> {likes.likeCount}
+              </>
+            ) : (
+              <AiOutlineLike />
+            )
+          }
+          onClick={postLikesHandler}
+        ></IconButton>
 
         <Link to={`/post/${postId}`}>
           <IconButton
@@ -129,7 +152,7 @@ export function Post({
           variant='ghost'
           aria-label='bookmarks'
           icon={
-            allBookmarks.some((post) => post._id === postId) ? (
+            allBookmarks.some((id) => id === postId) ? (
               <BsFillBookmarksFill />
             ) : (
               <BiBookmarks />

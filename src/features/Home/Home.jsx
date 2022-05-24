@@ -19,8 +19,8 @@ export function Home() {
       display={"flex"}
       mt={20}
     >
-      <SidebarLeft />
-      <Flex grow={1} direction='column'>
+      <SidebarLeft w={"20%"} />
+      <Flex direction='column' w={"60%"}>
         <PostTextBox />
         <HStack justifyContent={"space-between"} px={2} py={4}>
           <Heading as='h4' size='md'>
@@ -32,7 +32,7 @@ export function Home() {
           <Post key={post._id} post={post} />
         ))}
       </Flex>
-      <SidebarRight />
+      <SidebarRight w={"20%"} />
     </Container>
   );
 }

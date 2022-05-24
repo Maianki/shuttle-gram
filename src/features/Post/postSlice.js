@@ -18,9 +18,6 @@ import {
 const initialState = {
   userPosts: [],
   allPosts: [],
-  likes: [],
-  comments: [],
-  commentsStatus: [],
   postStatus: "idle",
   postError: null,
 };
@@ -132,6 +129,38 @@ export const deleteComment = createAsyncThunk(
   }
 );
 
+export const likePost = createAsyncThunk(
+  "post/likePost",
+  async ({ token, postId }, { rejectWithValue }) => {
+    try {
+      const response = await likePostService(token, postId);
+
+      console.log(response.data.posts);
+      if (response.status === 201) {
+        return response.data.posts;
+      }
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const dislikePost = createAsyncThunk(
+  "post/likePost",
+  async ({ token, postId }, { rejectWithValue }) => {
+    try {
+      const response = await dislikePostService(token, postId);
+
+      console.log(response.data.posts);
+      if (response.status === 201) {
+        return response.data.posts;
+      }
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "posts",
   initialState,
@@ -222,6 +251,28 @@ const postSlice = createSlice({
     [addComment.rejected]: (state, { payload }) => {
       state.postStatus = "rejected";
       state.postError = payload.errors;
+    },
+    [likePost.pending]: (state) => {
+      state.postStatus = "loading";
+    },
+    [likePost.fulfilled]: (state, { payload }) => {
+      state.allPosts = payload;
+      state.postStatus = "success";
+    },
+    [likePost.rejected]: (state, { payload }) => {
+      state.postStatus = "rejected";
+      console.error(payload);
+    },
+    [dislikePost.pending]: (state) => {
+      state.postStatus = "loading";
+    },
+    [dislikePost.fulfilled]: (state, { payload }) => {
+      state.allPosts = payload;
+      state.postStatus = "success";
+    },
+    [dislikePost.rejected]: (state, { payload }) => {
+      state.postStatus = "rejected";
+      console.error(payload);
     },
   },
 });
