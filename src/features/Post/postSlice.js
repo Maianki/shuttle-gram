@@ -137,7 +137,6 @@ export const likePost = createAsyncThunk(
     try {
       const response = await likePostService(token, postId);
 
-      console.log(response.data.posts);
       if (response.status === 201) {
         return response.data.posts;
       }
