@@ -24,19 +24,18 @@ export function SidebarRight() {
   const dispatch = useDispatch();
   const {
     users: { currentUser, allUsers, followUsers },
-    auth: { userToken },
+    auth: { userToken, user },
   } = useSelector((state) => state);
 
   const followBoxColor = useColorModeValue("primaryDark", "gray.400");
 
-  const usersSuggestion = allUsers.reduce((suggestedUsers, user) => {
-    return user._id === currentUser?._id ||
-      currentUser?.following?.find(
-        (suggestedUser) => suggestedUser._id === user._id
+  const usersSuggestion = allUsers.filter(
+    (currUser) =>
+      currUser.username !== user?.username &&
+      !followUsers.some(
+        (followUser) => followUser.username === currUser.username
       )
-      ? suggestedUsers
-      : [...suggestedUsers, user];
-  }, []);
+  );
 
   const btnFollowHandler = (followUserId) => {
     if (followUsers.some((followUser) => followUser._id === followUserId)) {

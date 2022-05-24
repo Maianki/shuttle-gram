@@ -17,9 +17,22 @@ import {
 } from "assets";
 import { NavLink } from "react-router-dom";
 import styles from "./sidebar.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "features/Auth/authSlice";
 
 export function SidebarLeft() {
-  const createHandler = () => {};
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const {
+    auth: { user },
+  } = useSelector((state) => state);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
   return (
     <div>
       <Flex
@@ -93,7 +106,7 @@ export function SidebarLeft() {
           </NavLink>
 
           <Button
-            onClick={createHandler}
+            onClick={handleLogout}
             mt={10}
             w={"full"}
             bg={"primary"}
@@ -102,19 +115,17 @@ export function SidebarLeft() {
               bg: useColorModeValue("gray.700", "gray.600"),
             }}
           >
-            Create New Post
+            Logout
           </Button>
         </Box>
 
         <HStack spacing='24px'>
-          <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
+          <Avatar name='Dan Abrahmov' src={user.profilePic} />
 
           <Heading as='h5' size='sm'>
-            Ankit Kumain
+            {`${user.firstName} ${user.lastName}`}
           </Heading>
-          <Box>
-            <FaEllipsisV />
-          </Box>
+          <Box></Box>
         </HStack>
       </Flex>
     </div>
