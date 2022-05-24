@@ -7,13 +7,12 @@ import { Post } from "./Post";
 
 export function SinglePost() {
   const {
-    posts: { allPosts, postStatus },
+    posts: { allPosts },
   } = useSelector((state) => state);
 
   const { postId } = useParams();
   const currentPost = allPosts.find((post) => post._id === postId);
-  console.log(currentPost);
-  console.log(postStatus);
+
   return (
     <Container
       maxW={1280}
@@ -21,13 +20,13 @@ export function SinglePost() {
       display={"flex"}
       mt={20}
     >
-      <SidebarLeft />
-      <Flex grow={1} direction='column'>
+      <SidebarLeft w={"20%"} />
+      <Flex direction='column' w={"80%"}>
         <HStack justifyContent={"space-between"} px={2} py={4}>
           <Post post={currentPost} />
         </HStack>
       </Flex>
-      <SidebarRight />
+      <SidebarRight w={"20%"} />
     </Container>
   );
 }

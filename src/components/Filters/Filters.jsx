@@ -8,10 +8,11 @@ import {
 } from "@chakra-ui/react";
 
 import { BiAbacus } from "assets";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { sortBy } from "features/Post/postSlice";
 
 export function Filters() {
-  const { posts: allPosts } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   return (
     <Box>
@@ -20,9 +21,15 @@ export function Filters() {
           Filters
         </MenuButton>
         <MenuList>
-          <MenuItem>Filter by trending</MenuItem>
-          <MenuItem>Filter by oldest</MenuItem>
-          <MenuItem>Filter by recent</MenuItem>
+          <MenuItem onClick={() => dispatch(sortBy("trending"))}>
+            Filter by trending
+          </MenuItem>
+          <MenuItem onClick={() => dispatch(sortBy("oldest"))}>
+            Filter by oldest
+          </MenuItem>
+          <MenuItem onClick={() => dispatch(sortBy("recent"))}>
+            Filter by recent
+          </MenuItem>
         </MenuList>
       </Menu>
     </Box>

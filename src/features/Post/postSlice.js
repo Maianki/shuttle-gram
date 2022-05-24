@@ -17,6 +17,7 @@ import {
 const initialState = {
   userPosts: [],
   allPosts: [],
+  filterBy: "allPosts",
   postStatus: "idle",
   postError: null,
 };
@@ -165,7 +166,11 @@ export const dislikePost = createAsyncThunk(
 const postSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    sortBy: (state, { payload }) => {
+      state.filterBy = payload;
+    },
+  },
   extraReducers: {
     [getUserAllPosts.pending]: (state) => {
       state.postStatus = "loading";
@@ -279,5 +284,6 @@ const postSlice = createSlice({
 });
 
 const { reducer, actions } = postSlice;
+export const { sortBy } = actions;
 
 export default reducer;

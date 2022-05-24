@@ -25,7 +25,7 @@ export function Bookmarks() {
         {bookMarkedPosts.length > 0 ? (
           bookMarkedPosts.map((post) => <Post key={post._id} post={post} />)
         ) : (
-          <Heading as='h4' size='md' px={2} py={4}>
+          <Heading as='h4' size='md' px={2} py={4} textAlign='center'>
             No Bookmarks added yet
           </Heading>
         )}
