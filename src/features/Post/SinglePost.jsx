@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { SidebarLeft, SidebarRight } from "components";
 import { Container, Flex, HStack } from "@chakra-ui/react";
 import { useSelector } from "react-redux";

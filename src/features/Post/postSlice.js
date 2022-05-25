@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 
 import {
   getPostsService,
-  getSinglePostService,
   createPostService,
   deletePostService,
   editPostService,
