@@ -21,7 +21,8 @@ export const getAllPostsOfSingleUserService = async (username) => {
  * Service to return  particular post
  */
 export const getSinglePostService = async (postId) => {
-  const response = await axios.get(`${POSTS_API}/:${postId}`);
+  console.log(postId);
+  const response = await axios.get(`${POSTS_API}/${postId}`);
   return response;
 };
 
