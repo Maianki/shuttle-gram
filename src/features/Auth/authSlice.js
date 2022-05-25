@@ -69,10 +69,13 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: () => {
+    logout: (state) => {
       localStorage.removeItem("SGtoken");
       localStorage.removeItem("SGuser");
-      return { ...initialState };
+      state.userToken = null;
+      state.user = null;
+      state.authError = null;
+      state.authStatus = "idle";
     },
   },
   extraReducers: {

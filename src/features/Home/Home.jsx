@@ -16,8 +16,6 @@ export function Home() {
 
   const dispatch = useDispatch();
 
-  console.log(followUsers);
-
   useEffect(() => {
     dispatch(getUserAllPosts());
   }, [dispatch]);

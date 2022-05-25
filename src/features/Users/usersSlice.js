@@ -10,6 +10,8 @@ import {
   removeFromFollowService,
 } from "services";
 
+import { logout } from "features/Auth/authSlice";
+
 const initialState = {
   currentUser: null,
   userPosts: [],
@@ -257,6 +259,19 @@ const usersSlice = createSlice({
     [removeUserFromFollow.rejected]: (state, { payload }) => {
       state.followUserStatus = "rejected";
       state.followUserError = payload.errors;
+    },
+    [logout]: (state) => {
+      state.currentUser = null;
+      state.userPosts = [];
+      state.allUsers = [];
+      state.allBookmarks = [];
+      state.followUsers = [];
+      state.usersStatus = "idle";
+      state.currentUserStatus = "idle";
+      state.followUserStatus = "idle";
+      state.currentUserError = null;
+      state.usersError = null;
+      state.followUserError = null;
     },
   },
 });
