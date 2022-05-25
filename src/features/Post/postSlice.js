@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import { logout } from "features/Auth/authSlice";
 
 import {
   getPostsService,
@@ -277,6 +278,13 @@ const postSlice = createSlice({
     [dislikePost.rejected]: (state, { payload }) => {
       state.postStatus = "rejected";
       console.error(payload);
+    },
+    [logout]: (state) => {
+      state.userPosts = [];
+      state.allPosts = [];
+      state.filterBy = "allPosts";
+      state.postStatus = "idle";
+      state.postError = null;
     },
   },
 });
