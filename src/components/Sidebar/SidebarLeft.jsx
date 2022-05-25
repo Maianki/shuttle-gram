@@ -31,7 +31,7 @@ export function SidebarLeft() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/sign-up", { replace: true });
+    navigate("/", { replace: true });
   };
   return (
     <div>
