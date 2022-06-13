@@ -9,16 +9,15 @@ import { formatDate } from "../utils/authUtils";
 export const posts = [
   {
     _id: uuid(),
-    content:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
+    content: "Shuttle Shopy is a great ecommerce app. Amazing services.",
     likes: {
       likeCount: 0,
       likedBy: [],
       dislikedBy: [],
     },
-    firstName: "Adarsh",
-    lastName: "Balika",
-    username: "adarshbalika",
+    firstName: "Amisha",
+    lastName: "Bisht",
+    username: "bishtamisha",
     profilePic:
       "https://res.cloudinary.com/dj5aind8q/image/upload/v1653058462/ShuttleGram/Selena_Ada_xlefd7.jpg",
     createdAt: formatDate(),
@@ -36,7 +35,7 @@ export const posts = [
       {
         _id: uuid(),
         username: "ankit12",
-        text: "Gazab bhai",
+        text: "Looks great.",
         votes: {
           upvotedBy: [],
           downvotedBy: [],
@@ -70,7 +69,7 @@ export const posts = [
       },
       {
         _id: uuid(),
-        username: "balikadarsh",
+        username: "bishtamisha",
         text: "Wow!",
         votes: {
           upvotedBy: [],
@@ -148,6 +147,33 @@ export const posts = [
         _id: uuid(),
         username: "ankit12",
         text: "woww",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    content: "Grateful of all god for all the things that happened last week.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    firstName: "Sarah",
+    lastName: "Pi",
+    username: "sarah420",
+    profilePic:
+      "https://res.cloudinary.com/dj5aind8q/image/upload/v1653058462/ShuttleGram/Sarah_Pi_uq2rae.jpg",
+    createdAt: "2022-04-23T10:38:12+05:30",
+    updatedAt: formatDate(),
+    comments: [
+      {
+        _id: uuid(),
+        username: "ankit12",
+        text: "Congratulations!",
         votes: {
           upvotedBy: [],
           downvotedBy: [],

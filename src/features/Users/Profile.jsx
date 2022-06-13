@@ -1,23 +1,21 @@
 import React, { useEffect } from "react";
-
 import { Container, Flex, Heading, HStack } from "@chakra-ui/react";
 import { SidebarLeft, SidebarRight, Filters } from "components";
 import { Post } from "features";
 import { ProfileCard } from "./ProfileCard";
-import { getAllPostsOfSingleUser } from "features/Post/postSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getUserAllPosts } from "features/Post/postSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export function Profile() {
+  const { username } = useParams();
   const dispatch = useDispatch();
 
   const {
-    auth: { user },
-    posts: { userPosts, allPosts },
+    posts: { allPosts },
   } = useSelector((state) => state);
 
-  useEffect(() => {
-    dispatch(getAllPostsOfSingleUser({ username: user.username }));
-  }, [dispatch, user.username, allPosts]);
+  const userPosts = allPosts?.filter((post) => post.username === username);
 
   return (
     <Container
@@ -28,7 +26,7 @@ export function Profile() {
     >
       <SidebarLeft w={"20%"} />
       <Flex grow={1} direction='column' w={"60%"}>
-        <ProfileCard />
+        <ProfileCard username={username} />
         <HStack justifyContent={"space-between"} px={2} py={4}>
           <Heading as='h4' size='md'>
             Latest Posts

@@ -15,19 +15,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { getSingleUser } from "./usersSlice";
 import { useEffect } from "react";
 
-export function ProfileCard() {
+export function ProfileCard({ username }) {
   const boxBg = useColorModeValue("white", "gray.900");
   const bioTextColor = useColorModeValue("gray.700", "gray.400");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const {
-    auth: { user },
     users: { currentUser, currentUserStatus },
   } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(getSingleUser({ username: user.username }));
-  }, [dispatch, user.username]);
+    dispatch(getSingleUser({ username }));
+  }, [dispatch, username]);
 
   return (
     <Center py={6}>

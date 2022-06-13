@@ -13,6 +13,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Search2Icon, SmallAddIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -23,7 +24,7 @@ import {
 export function SidebarRight() {
   const dispatch = useDispatch();
   const {
-    users: { currentUser, allUsers, followUsers },
+    users: { allUsers, followUsers },
     auth: { userToken, user },
   } = useSelector((state) => state);
 
@@ -85,17 +86,18 @@ export function SidebarRight() {
               key={user._id}
               justifyContent={"space-between"}
             >
-              <HStack>
-                <Avatar
-                  name={`${user.firstName} ${user.lastName}`}
-                  src={user.profilePic}
-                />
-                <Text
-                  size='sm'
-                  fontSize={14}
-                >{`${user.firstName} ${user.lastName}`}</Text>
-              </HStack>
-
+              <Link to={`/profile/${user.username}`}>
+                <HStack>
+                  <Avatar
+                    name={`${user.firstName} ${user.lastName}`}
+                    src={user.profilePic}
+                  />
+                  <Text
+                    size='sm'
+                    fontSize={14}
+                  >{`${user.firstName} ${user.lastName}`}</Text>
+                </HStack>
+              </Link>
               <Button
                 size={"sm"}
                 color={followBoxColor}

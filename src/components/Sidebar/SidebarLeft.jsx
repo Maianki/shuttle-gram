@@ -92,7 +92,7 @@ export function SidebarLeft() {
           </NavLink>
 
           <NavLink
-            to='/profile'
+            to={`/profile/${user.username}`}
             className={({ isActive }) =>
               isActive
                 ? `${styles.isNavLinkActive} ${styles.sidebarMenuNavLink}`

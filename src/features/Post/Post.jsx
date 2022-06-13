@@ -86,7 +86,10 @@ export function Post({
         w={"full"}
       >
         <Box display={"flex"} alignItems='center'>
-          <Avatar name={`${firstName} ${lastName}`} src={profilePic} />
+          <Link to={`/profile/${username}`}>
+            <Avatar name={`${firstName} ${lastName}`} src={profilePic} />
+          </Link>
+
           <Heading as='h6' size='xs' px={2}>
             {`${firstName} ${lastName}`}
           </Heading>
