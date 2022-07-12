@@ -14,6 +14,7 @@ import { Routes, Route } from "react-router-dom";
 import Mockman from "mockman-js";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBookmarks, getAllUsers } from "features/Users/usersSlice";
+import { getUserAllPosts } from "features/Post/postSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -26,11 +27,15 @@ function App() {
 
   useEffect(() => {
     dispatch(getAllBookmarks({ token }));
-  }, [dispatch, token]);
+  }, [token]);
 
   useEffect(() => {
     dispatch(getAllUsers());
-  }, [dispatch]);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getUserAllPosts);
+  }, []);
 
   return (
     <div className='App'>
@@ -53,7 +58,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route path='/home' element={<Home />}></Route>
           <Route path='/bookmarks' element={<Bookmarks />}></Route>
-          <Route path='/profile' element={<Profile />}></Route>
+          <Route path='/profile/:username' element={<Profile />}></Route>
           <Route path='/explore' element={<Explore />}></Route>
           <Route path='/post/:postId' element={<SinglePost />}></Route>
         </Route>

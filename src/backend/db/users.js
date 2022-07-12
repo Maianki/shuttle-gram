@@ -22,11 +22,11 @@ export const users = [
   },
   {
     _id: uuid(),
-    firstName: "Adarsh",
-    lastName: "Balika",
-    username: "balikadarsh",
-    email: "adarshbalika@gmail.com",
-    password: "balika123",
+    firstName: "Amisha",
+    lastName: "Bisht",
+    username: "bishtamisha",
+    email: "bishtamisha@gmail.com",
+    password: "amisha12",
     bio: "I am a frontend web developer",
     portfolio: "https://adarshbalika.netlify.app/",
     profilePic:

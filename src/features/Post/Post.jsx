@@ -21,11 +21,13 @@ import {
   AiOutlineLike,
   AiFillLike,
   FaEllipsisV,
+  BsDot,
 } from "assets";
 import { Comment } from "./Comment";
 import { deleteUserPost, likePost, dislikePost } from "./postSlice";
 import { addToBookmarks, removeFromBookmarks } from "features/Users/usersSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { getPostTime } from "utils";
 import { PostEditModal } from "./PostEditModal";
 import { Link } from "react-router-dom";
 
@@ -40,6 +42,7 @@ export function Post({
     username,
     _id: postId,
     comments,
+    createdAt,
   },
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -48,6 +51,8 @@ export function Post({
     auth: { user: currentUser, userToken: token },
     users: { allBookmarks },
   } = useSelector((state) => state);
+
+  let timeElapsed = getPostTime(createdAt);
 
   const dispatch = useDispatch();
 
@@ -81,12 +86,24 @@ export function Post({
         w={"full"}
       >
         <Box display={"flex"} alignItems='center'>
-          <Avatar name={`${firstName} ${lastName}`} src={profilePic} />
+          <Link to={`/profile/${username}`}>
+            <Avatar name={`${firstName} ${lastName}`} src={profilePic} />
+          </Link>
+
           <Heading as='h6' size='xs' px={2}>
             {`${firstName} ${lastName}`}
           </Heading>
           <Text fontSize='xs' color={"gray.500"}>
             @{username}
+          </Text>
+          <Text
+            fontSize='xs'
+            display={"flex"}
+            alignItems={"center"}
+            color={"gray.500"}
+          >
+            <BsDot />
+            {timeElapsed}
           </Text>
         </Box>
         {currentUser.username === username && (
