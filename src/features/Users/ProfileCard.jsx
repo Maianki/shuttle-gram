@@ -9,8 +9,10 @@ import {
   Link,
   useColorModeValue,
   useDisclosure,
+  HStack,
 } from "@chakra-ui/react";
 import { EditProfileModal } from "./EditProfileModal";
+import { ThreeDots } from "react-loader-spinner";
 import { useSelector, useDispatch } from "react-redux";
 import { getSingleUser } from "./usersSlice";
 import { useEffect } from "react";
@@ -30,7 +32,11 @@ export function ProfileCard({ username }) {
 
   return (
     <Center py={6}>
-      {currentUserStatus === "loading" && <h1>Loading..</h1>}
+      {currentUserStatus === "loading" && (
+        <HStack justifyContent={"center"}>
+          <ThreeDots color='#00BFFF' height={20} width={40} />
+        </HStack>
+      )}
       {currentUserStatus === "success" && (
         <>
           <EditProfileModal

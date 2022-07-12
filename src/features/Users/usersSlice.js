@@ -118,7 +118,7 @@ export const addUserToFollow = createAsyncThunk(
   async ({ token, followUserId }, { rejectWithValue }) => {
     try {
       const response = await addUserToFollowService(token, followUserId);
-      console.log(response);
+
       if (response.status === 200) {
         return {
           user: response.data.user,
